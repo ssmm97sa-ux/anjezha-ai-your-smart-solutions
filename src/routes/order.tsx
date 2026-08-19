@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { services, getService } from "@/lib/services";
 
-type OrderSearch = { service?: string };
+type OrderSearch = { service: string | undefined };
 
 export const Route = createFileRoute("/order")({
   validateSearch: (search: Record<string, unknown>): OrderSearch => ({
-    service: typeof search.service === "string" ? search.service : undefined,
+    service: typeof search["service"] === "string" ? search["service"] : undefined,
   }),
   head: () => ({
     meta: [
