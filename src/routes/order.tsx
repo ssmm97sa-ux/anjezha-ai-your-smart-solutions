@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { services, getService } from "@/lib/services";
 
-type OrderSearch = { service: string | undefined };
+type OrderSearch = { service?: string | undefined };
 
 export const Route = createFileRoute("/order")({
   validateSearch: (search: Record<string, unknown>): OrderSearch => ({
@@ -34,7 +34,7 @@ const urgencyOptions = [
 function OrderPage() {
   const { service: initial } = Route.useSearch();
   const [serviceId, setServiceId] = useState(
-    getService(initial)?.id ?? services[0].id,
+    getService(initial)?.id ?? services[0]!.id,
   );
   const [urgency, setUrgency] = useState("normal");
   const [fileName, setFileName] = useState<string | null>(null);
