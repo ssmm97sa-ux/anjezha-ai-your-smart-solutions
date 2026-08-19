@@ -1,0 +1,252 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { services, getService } from "@/lib/services";
+
+type OrderSearch = { service?: string | undefined };
+
+export const Route = createFileRoute("/order")({
+  validateSearch: (search: Record<string, unknown>): OrderSearch => ({
+    service: typeof search["service"] === "string" ? search["service"] : undefined,
+  }),
+  head: () => ({
+    meta: [
+      { title: "اطلب خدمتك | أنجزها AI" },
+      {
+        name: "description",
+        content:
+          "أرسل تفاصيل طلبك في أقل من دقيقتين: اختر الخدمة، أرفق ملفك، وشاهد السعر بالدرهم الإماراتي قبل الدفع.",
+      },
+      { property: "og:title", content: "اطلب خدمتك | أنجزها AI" },
+      {
+        property: "og:description",
+        content: "نموذج طلب سريع وسهل على الجوال مع سعر واضح بالدرهم الإماراتي.",
+      },
+    ],
+  }),
+  component: OrderPage,
+});
+
+const urgencyOptions = [
+  { id: "normal", label: "عادي", extra: 0 },
+  { id: "fast", label: "مستعجل (خلال ٦ ساعات)", extra: 20 },
+];
+
+function OrderPage() {
+  const { service: initial } = Route.useSearch();
+  const [serviceId, setServiceId] = useState(
+    getService(initial)?.id ?? services[0]!.id,
+  );
+  const [urgency, setUrgency] = useState("normal");
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const service = getService(serviceId)!;
+  const extra = urgencyOptions.find((u) => u.id === urgency)?.extra ?? 0;
+  const total = service.price + extra;
+
+  if (submitted) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-24 text-center">
+        <span className="grid mx-auto h-16 w-16 place-items-center rounded-2xl bg-ai-gradient text-3xl text-primary-foreground">
+          ✓
+        </span>
+        <h1 className="mt-6 text-2xl font-bold">تم استلام طلبك</h1>
+        <p className="mt-3 leading-8 text-muted-foreground">
+          شكراً لك! سنراجع تفاصيل طلبك ونتواصل معك عبر الواتساب أو البريد الإلكتروني
+          لتأكيد السعر النهائي ({total} AED) واستكمال خطوة الدفع.
+        </p>
+        <div className="mt-6 rounded-2xl border border-dashed border-accent/50 bg-secondary p-4 text-sm text-muted-foreground">
+          بوابة الدفع الإلكتروني (Ziina) قيد التفعيل حالياً، وسيتم تفعيلها قريباً على
+          الموقع.
+        </div>
+        <button
+          onClick={() => setSubmitted(false)}
+          className="mt-8 rounded-2xl border border-border px-6 py-3 text-sm font-semibold"
+        >
+          إرسال طلب آخر
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-14">
+      <span className="text-sm font-semibold text-accent">نموذج الطلب</span>
+      <h1 className="mt-3 text-3xl font-bold sm:text-4xl">اطلب خدمتك الآن</h1>
+      <p className="mt-3 max-w-xl leading-8 text-muted-foreground">
+        عبّئ التفاصيل التالية وسنبدأ العمل فور تأكيد الدفع.
+      </p>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSubmitted(true);
+        }}
+        className="mt-10 grid items-start gap-8 lg:grid-cols-[1.4fr_1fr]"
+      >
+        <div className="space-y-6">
+          <section className="surface-card rounded-3xl p-6">
+            <h2 className="text-lg font-bold">١. اختر الخدمة</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {services.map((s) => {
+                const active = s.id === serviceId;
+                return (
+                  <button
+                    type="button"
+                    key={s.id}
+                    onClick={() => setServiceId(s.id)}
+                    className={`rounded-2xl border p-4 text-right transition-colors ${
+                      active
+                        ? "border-accent bg-secondary"
+                        : "border-border hover:border-accent/40"
+                    }`}
+                  >
+                    <span className="text-xl">{s.icon}</span>
+                    <span className="mt-2 block text-sm font-semibold">{s.title}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">
+                      من {s.price} AED
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="surface-card rounded-3xl p-6">
+            <h2 className="text-lg font-bold">٢. بياناتك</h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 block text-sm font-medium">الاسم الكامل</span>
+                <input required className="field-input" placeholder="مثال: سلطان العوفي" />
+              </label>
+              <label className="block">
+                <span className="mb-2 block text-sm font-medium">البريد الإلكتروني</span>
+                <input
+                  required
+                  type="email"
+                  dir="ltr"
+                  className="field-input"
+                  placeholder="name@email.com"
+                />
+              </label>
+              <label className="block sm:col-span-2">
+                <span className="mb-2 block text-sm font-medium">
+                  رقم الواتساب / الجوال
+                </span>
+                <input
+                  required
+                  type="tel"
+                  dir="ltr"
+                  className="field-input"
+                  placeholder="+971 50 000 0000"
+                />
+              </label>
+            </div>
+          </section>
+
+          <section className="surface-card rounded-3xl p-6">
+            <h2 className="text-lg font-bold">٣. تفاصيل الطلب</h2>
+            <label className="mt-4 block">
+              <span className="mb-2 block text-sm font-medium">اشرح لنا ما تحتاجه</span>
+              <textarea
+                required
+                rows={6}
+                className="field-input"
+                placeholder="مثال: أحتاج سيرة ذاتية باللغة الإنجليزية لوظيفة محاسب في دبي، خبرتي ٥ سنوات..."
+              />
+            </label>
+
+            <label className="mt-4 block">
+              <span className="mb-2 block text-sm font-medium">
+                إرفاق ملف (اختياري)
+              </span>
+              <div className="rounded-2xl border border-dashed border-border bg-secondary/50 p-6 text-center">
+                <input
+                  type="file"
+                  className="mx-auto block w-full text-sm text-muted-foreground file:ml-3 file:rounded-lg file:border-0 file:bg-primary file:px-4 file:py-2 file:text-sm file:text-primary-foreground"
+                  onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+                />
+                <p className="mt-3 text-xs text-muted-foreground">
+                  {fileName
+                    ? `الملف المختار: ${fileName}`
+                    : "PDF أو Word أو صورة — بحد أقصى ١٠ ميجابايت"}
+                </p>
+              </div>
+            </label>
+
+            <div className="mt-5">
+              <span className="mb-2 block text-sm font-medium">سرعة التنفيذ</span>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {urgencyOptions.map((u) => (
+                  <button
+                    type="button"
+                    key={u.id}
+                    onClick={() => setUrgency(u.id)}
+                    className={`rounded-2xl border p-4 text-right text-sm transition-colors ${
+                      urgency === u.id
+                        ? "border-accent bg-secondary"
+                        : "border-border hover:border-accent/40"
+                    }`}
+                  >
+                    <span className="block font-semibold">{u.label}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">
+                      {u.extra ? `+ ${u.extra} AED` : "ضمن السعر الأساسي"}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside className="lg:sticky lg:top-24">
+          <div className="rounded-3xl bg-navy-gradient p-6 text-navy-foreground shadow-[var(--shadow-lift)]">
+            <h2 className="text-lg font-bold">ملخص الطلب</h2>
+
+            <div className="mt-5 space-y-3 text-sm">
+              <div className="flex justify-between gap-4">
+                <span className="text-navy-foreground/70">الخدمة</span>
+                <span className="font-semibold">{service.title}</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="text-navy-foreground/70">السعر الأساسي</span>
+                <span>{service.price} AED</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="text-navy-foreground/70">رسوم الاستعجال</span>
+                <span>{extra} AED</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="text-navy-foreground/70">مدة التسليم</span>
+                <span>{urgency === "fast" ? "خلال ٦ ساعات" : service.delivery}</span>
+              </div>
+            </div>
+
+            <div className="mt-5 flex items-end justify-between border-t border-navy-foreground/15 pt-5">
+              <span className="text-sm text-navy-foreground/70">الإجمالي</span>
+              <span className="text-3xl font-bold">
+                {total} <span className="text-base">AED</span>
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow"
+            >
+              المتابعة إلى الدفع
+            </button>
+
+            <p className="mt-3 text-center text-xs text-navy-foreground/60">
+              الدفع الإلكتروني (Ziina) قيد التفعيل — سنؤكد طلبك وطريقة الدفع بعد الإرسال.
+            </p>
+          </div>
+
+          <div className="mt-4 rounded-2xl border border-border bg-card p-5 text-xs leading-6 text-muted-foreground">
+            بإرسال الطلب فإنك توافق على الشروط والأحكام وسياسة الخصوصية. جميع ملفاتك تبقى
+            سرية ولا تُشارك مع أي طرف ثالث.
+          </div>
+        </aside>
+      </form>
+    </div>
+  );
+}
