@@ -61,7 +61,7 @@ function OrderPage() {
         </div>
         <button
           onClick={() => setSubmitted(false)}
-                   className="mt-8 rounded-2xl border border-border px-6 py-3 text-sm font-semibold"
+          className="mt-8 rounded-2xl border border-border px-6 py-3 text-sm font-semibold"
         >
           إرسال طلب آخر
         </button>
@@ -80,7 +80,13 @@ function OrderPage() {
         </p>
       </div>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSubmitted(true);
+        }}
+        className="grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]"
+      >
         <div className="space-y-5">
           <section className="surface-card rounded-3xl p-5 sm:p-6">
             <h2 className="text-lg font-bold">الخدمة المختارة</h2>
@@ -172,7 +178,9 @@ function OrderPage() {
           <section className="surface-card rounded-3xl p-5 sm:p-6">
             <h2 className="text-lg font-bold">تفاصيل الطلب</h2>
             <label className="mt-4 block">
-              <span className="mb-2 block text-sm font-medium">اشرح لنا ما تحتاجه بالتفصيل</span>
+              <span className="mb-2 block text-sm font-medium">
+                اشرح لنا ما تحتاجه بالتفصيل
+              </span>
               <textarea
                 required
                 rows={6}
@@ -223,19 +231,13 @@ function OrderPage() {
         </div>
 
         <aside className="lg:sticky lg:top-24">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-            className="rounded-3xl bg-navy-gradient p-5 text-navy-foreground shadow-[var(--shadow-lift)] sm:p-6"
-          >
+          <div className="rounded-3xl bg-navy-gradient p-5 text-navy-foreground shadow-[var(--shadow-lift)] sm:p-6">
             <h2 className="text-lg font-bold">ملخص الطلب</h2>
 
             <div className="mt-5 space-y-3 text-sm">
               <div className="flex justify-between gap-4">
                 <span className="text-navy-foreground/70">الخدمة</span>
-                <span className="font-semibold text-end">{service.title}</span>
+                <span className="text-end font-semibold">{service.title}</span>
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-navy-foreground/70">السعر الأساسي</span>
@@ -269,7 +271,7 @@ function OrderPage() {
               بوابة الدفع الإلكتروني (Ziina) قيد التفعيل — سنؤكد طلبك وطريقة الدفع بعد
               الإرسال.
             </p>
-          </form>
+          </div>
 
           <div className="mt-4 rounded-2xl border border-border bg-card p-5 text-xs leading-6 text-muted-foreground">
             بإرسال الطلب فإنك توافق على{" "}
@@ -283,7 +285,7 @@ function OrderPage() {
             . جميع ملفاتك تبقى سرية ولا تُشارك مع أي طرف ثالث.
           </div>
         </aside>
-      </div>
+      </form>
     </div>
   );
 }
