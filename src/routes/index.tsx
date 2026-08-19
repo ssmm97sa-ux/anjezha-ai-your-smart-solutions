@@ -67,19 +67,21 @@ function Home() {
             </Link>
           </div>
 
-          <dl className="mt-14 grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-4">
+          <div className="mt-14 flex flex-wrap gap-4">
             {[
-              ["+٢٤٠٠", "طلب منجز"],
-              ["٦ ساعات", "أسرع تسليم"],
-              ["١٥ AED", "تبدأ الأسعار"],
-              ["٪٩٨", "رضا العملاء"],
-            ].map(([v, l]) => (
-              <div key={l}>
-                <dt className="text-2xl font-bold">{v}</dt>
-                <dd className="mt-1 text-xs text-navy-foreground/60">{l}</dd>
+              "خدمات سريعة وسهلة",
+              "أسعار واضحة",
+              "دعم باللغة العربية",
+            ].map((text) => (
+              <div
+                key={text}
+                className="flex items-center gap-3 rounded-2xl border border-navy-foreground/10 bg-navy-foreground/5 px-5 py-3"
+              >
+                <span className="h-2 w-2 rounded-full bg-glow" />
+                <span className="text-sm font-semibold">{text}</span>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
