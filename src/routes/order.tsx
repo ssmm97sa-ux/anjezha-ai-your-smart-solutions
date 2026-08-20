@@ -80,10 +80,10 @@ function OrderPage() {
       </div>
 
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitted(true);
-        }}
+  action="https://formsubmit.co/ss.mm.97@hotmail.com"
+  method="POST"
+  encType="multipart/form-data"
+
         className="grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]"
       >
         <div className="space-y-5">
@@ -141,7 +141,7 @@ function OrderPage() {
               <label className="block">
                 <span className="mb-2 block text-sm font-medium">الاسم الكامل</span>
                 <input
-                  required
+                  required name="name"
                   className="field-input"
                   placeholder="مثال: سلطان العوفي"
                   autoComplete="name"
@@ -150,7 +150,7 @@ function OrderPage() {
               <label className="block">
                 <span className="mb-2 block text-sm font-medium">البريد الإلكتروني</span>
                 <input
-                  required
+                  required name="email"
                   type="email"
                   dir="ltr"
                   className="field-input"
@@ -163,7 +163,7 @@ function OrderPage() {
                   رقم الواتساب / الجوال
                 </span>
                 <input
-                  required
+                  required name="phone"
                   type="tel"
                   dir="ltr"
                   className="field-input"
@@ -181,7 +181,8 @@ function OrderPage() {
                 اشرح لنا ما تحتاجه بالتفصيل
               </span>
               <textarea
-                required
+              required
+name="details"
                 rows={6}
                 className="field-input"
                 placeholder="مثال: أحتاج سيرة ذاتية باللغة الإنجليزية لوظيفة محاسب في دبي، خبرتي ٥ سنوات..."
@@ -192,7 +193,7 @@ function OrderPage() {
               <span className="mb-2 block text-sm font-medium">إرفاق ملف (اختياري)</span>
               <div className="rounded-2xl border border-dashed border-border bg-secondary/50 p-5 text-center">
                 <input
-                  type="file"
+                  type="file" name="attachment"
                   className="mx-auto block w-full text-sm text-muted-foreground file:mr-3 file:rounded-lg file:border-0 file:bg-primary file:px-4 file:py-2 file:text-sm file:text-primary-foreground"
                   onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
                 />
