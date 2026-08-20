@@ -55,10 +55,9 @@ function OrderPage() {
           شكراً لك! سنراجع تفاصيل طلبك ونتواصل معك عبر الواتساب أو البريد الإلكتروني
           لتأكيد السعر النهائي ({total} AED) واستكمال خطوة الدفع.
         </p>
-        <div className="mt-6 rounded-2xl border border-dashed border-accent/50 bg-secondary p-4 text-sm text-muted-foreground">
-          بوابة الدفع الإلكتروني (Ziina) قيد التفعيل حالياً، وسيتم تفعيلها قريباً على
-          الموقع.
-        </div>
+        <a href="https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block rounded-2xl bg-primary px-6 py-3 font-bold text-primary-foreground">
+  ادفع الآن عبر Ziina
+</a>
         <button
           onClick={() => setSubmitted(false)}
           className="mt-8 rounded-2xl border border-border px-6 py-3 text-sm font-semibold"
