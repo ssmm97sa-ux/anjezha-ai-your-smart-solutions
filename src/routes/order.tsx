@@ -86,7 +86,7 @@ function OrderPage() {
         
 
       >
-        <input type="hidden" name="_next" value={service.price === 15 ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app" : service.price === 19 ? "https://pay.ziina.com/anjezha.ai/kHCKLG6FR?source=app" : service.price === 29 ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app" : service.price === 49 ? "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app" : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app"} />
+        <input type="hidden" name="_next" value={Number(service.price) === 15 ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app" : Number(service.price) === 19 ? "https://pay.ziina.com/anjezha.ai/kHCKLG6FR?source=app" : Number(service.price) === 29 ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app" : Number(service.price) === 49 ? "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app" : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app"} />
         <div className="space-y-5">
        
           <section className="surface-card rounded-3xl p-5 sm:p-6">
