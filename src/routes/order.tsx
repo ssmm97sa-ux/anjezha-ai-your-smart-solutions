@@ -270,8 +270,8 @@ name="details"
             </button>
 
             <p className="mt-3 text-center text-xs text-navy-foreground/60">
-              بوابة الدفع الإلكتروني (Ziina) قيد التفعيل — سنؤكد طلبك وطريقة الدفع بعد
-              الإرسال.
+              سيتم تحويلك إلى بوابة الدفع الآمنة (Ziina) لإتمام عملية الدفع.
+          
             </p>
           </div>
 
