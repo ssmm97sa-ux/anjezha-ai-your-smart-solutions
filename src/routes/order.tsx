@@ -83,10 +83,12 @@ function OrderPage() {
   action="https://formsubmit.co/ss.mm.97@hotmail.com"
   method="POST"
   encType="multipart/form-data"
+        
 
-        className="grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]"
       >
+        <input type="hidden" name="_next" value="https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app" />
         <div className="space-y-5">
+       
           <section className="surface-card rounded-3xl p-5 sm:p-6">
             <h2 className="text-lg font-bold">الخدمة المختارة</h2>
             <div className="mt-4 rounded-2xl border border-accent/30 bg-secondary/60 p-4">
