@@ -70,7 +70,7 @@ export const getService = (id: string | undefined) =>
 
 export const ziinaLinksByPrice: Record<number, string> = {
   15: "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app",
-  19: "https://pay.ziina.com/anjezha.ai/haUtXHLaF?source=app",
+  19: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
   29: "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app",
   49: "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app",
 };
