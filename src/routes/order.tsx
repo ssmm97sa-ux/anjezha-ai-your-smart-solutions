@@ -55,7 +55,21 @@ function OrderPage() {
           شكراً لك! سنراجع تفاصيل طلبك ونتواصل معك عبر الواتساب أو البريد الإلكتروني
           لتأكيد السعر النهائي ({total} AED) واستكمال خطوة الدفع.
         </p>
-        <a href="https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block rounded-2xl bg-primary px-6 py-3 font-bold text-primary-foreground">
+<a
+  href={
+    Number(service.price) === 15
+      ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app"
+      : Number(service.price) === 19
+      ? "https://pay.ziina.com/anjezha.ai/kHCKLG6FR?source=app"
+      : Number(service.price) === 29
+      ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app"
+      : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app"
+  }
+  target="_blank"
+>        
+  
+
+
   ادفع الآن عبر Ziina
 </a>
         <button
