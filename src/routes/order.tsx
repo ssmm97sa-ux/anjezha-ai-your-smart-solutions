@@ -43,7 +43,16 @@ function OrderPage() {
   const service = getService(serviceId)!;
   const extra = urgencyOptions.find((u) => u.id === urgency)?.extra ?? 0;
   const total = service.price + extra;
-
+const paymentLink =
+  service.id === "rewrite"
+    ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app"
+    : service.id === "content"
+    ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app"
+    : service.id === "email" ||
+      service.id === "summary" ||
+      service.id === "translation"
+    ? "https://pay.ziina.com/anjezha.ai/kHCKLG6FR?source=app"
+    : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app";
   if (submitted) {
     return (
       <div className="mx-auto max-w-xl px-4 py-24 text-center">
@@ -55,22 +64,12 @@ function OrderPage() {
           شكراً لك! سنراجع تفاصيل طلبك ونتواصل معك عبر الواتساب أو البريد الإلكتروني
           لتأكيد السعر النهائي ({total} AED) واستكمال خطوة الدفع.
         </p>
+
 <a
-  href={
-    Number(service.price) === 15
-      ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app"
-      : Number(service.price) === 19
-      ? "https://pay.ziina.com/anjezha.ai/kHCKLG6FR?source=app"
-      : Number(service.price) === 29
-      ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app"
-      : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app"
-  }
+  href={paymentLink}
   target="_blank"
->        
-  
-
-
-  ادفع الآن عبر Ziina
+>
+  Ziina ادفع الآن عبر
 </a>
         <button
           onClick={() => setSubmitted(false)}
