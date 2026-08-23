@@ -167,7 +167,7 @@ function OrderPage() {
                 <span className="mb-2 block text-sm font-medium">البريد الإلكتروني</span>
                 <input
                   required name="email"
-                  type="email"
+                type="text"
                   dir="ltr"
                   className="field-input"
                   placeholder="name@email.com"
