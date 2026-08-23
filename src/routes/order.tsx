@@ -44,14 +44,12 @@ function OrderPage() {
   const extra = urgencyOptions.find((u) => u.id === urgency)?.extra ?? 0;
   const total = service.price + extra;
 const paymentLink =
-  service.id === "rewrite"
+  service.price === 15
     ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app"
-    : service.id === "content"
+    : service.price === 19
+    ? "https://pay.ziina.com/anjezha.ai/haUtXHLaF?source=app"
+    : service.price === 29
     ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app"
-    : service.id === "email" ||
-      service.id === "summary" ||
-      service.id === "translation"
-    ? "https://pay.ziina.com/anjezha.ai/kHCKLG6FR?source=app"
     : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app";
   if (submitted) {
     return (
