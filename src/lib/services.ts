@@ -68,14 +68,16 @@ export const services: Service[] = [
 export const getService = (id: string | undefined) =>
   services.find((s) => s.id === id);
 
-export const ziinaLinksByPrice: Record<number, string> = {
-  15: "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app",
-  19: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
-  29: "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app",
-  49: "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app",
+export const ziinaLinksByService: Record<string, string> = {
+  cv: "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app",
+  email: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
+  summary: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
+  rewrite: "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app",
+  content: "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app",
+  translation: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
 };
 
 export const getPaymentLink = (service: Service | undefined) => {
-  const price = service?.price;
-  return (price !== undefined && ziinaLinksByPrice[price]) || "";
+  if (!service) return "";
+  return ziinaLinksByService[service.id] ?? "";
 };
