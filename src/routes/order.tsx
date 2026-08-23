@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { services, getService } from "@/lib/services";
+import { useEffect, useState } from "react";
+import { services, getService, getPaymentLink } from "@/lib/services";
 
 type OrderSearch = { service?: string | undefined };
 
@@ -40,17 +40,18 @@ function OrderPage() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const service = getService(serviceId)!;
+  // keep the selected service in sync when arriving from another service card
+  useEffect(() => {
+    const fromUrl = getService(initial);
+    if (fromUrl && fromUrl.id !== serviceId) setServiceId(fromUrl.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial]);
+
+  const service = getService(serviceId) ?? services[0]!;
   const extra = urgencyOptions.find((u) => u.id === urgency)?.extra ?? 0;
   const total = service.price + extra;
-const paymentLink =
-  service.price === 15
-    ? "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app"
-    : service.price === 19
-    ? "https://pay.ziina.com/anjezha.ai/haUtXHLaF?source=app"
-    : service.price === 29
-    ? "https://pay.ziina.com/anjezha.ai/nLPhhC8Fv?source=app"
-    : "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app";
+  const paymentLink = getPaymentLink(service);
+
   if (submitted) {
     return (
       <div className="mx-auto max-w-xl px-4 py-24 text-center">
