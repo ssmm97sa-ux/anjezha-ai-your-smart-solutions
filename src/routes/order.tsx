@@ -229,10 +229,12 @@ name="details"
 
             <button
               type="submit"
-              className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow"
+              disabled={sending}
+              className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow disabled:opacity-70"
             >
-              الانتقال للدفع
+              {sending ? "جاري التحويل للدفع..." : "الانتقال للدفع"}
             </button>
+
 
             <p className="mt-3 text-center text-xs text-navy-foreground/60">
               سيتم تحويلك إلى بوابة الدفع الآمنة (Ziina) لإتمام عملية الدفع.
