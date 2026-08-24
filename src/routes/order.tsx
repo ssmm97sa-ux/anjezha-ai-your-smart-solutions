@@ -252,14 +252,11 @@ name="details"
                 <span>{service.price} AED</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-navy-foreground/70">رسوم الاستعجال</span>
-                <span>{extra} AED</span>
-              </div>
-              <div className="flex justify-between gap-4">
                 <span className="text-navy-foreground/70">مدة التسليم</span>
-                <span>{urgency === "fast" ? "خلال ٦ ساعات" : service.delivery}</span>
+                <span>{service.delivery}</span>
               </div>
             </div>
+
 
             <div className="mt-5 flex items-end justify-between border-t border-navy-foreground/15 pt-5">
               <span className="text-sm text-navy-foreground/70">الإجمالي</span>
