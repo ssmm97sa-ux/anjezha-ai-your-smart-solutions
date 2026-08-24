@@ -80,7 +80,9 @@ function OrderPage() {
         onSubmit={handleSubmit}
       >
 
+        <input type="hidden" name="_next" value={paymentLink} />
         <input type="hidden" name="_captcha" value="false" />
+
         <input type="hidden" name="_service" value={service.title} />
         <input type="hidden" name="_price" value={`${total} AED`} />
 
