@@ -212,30 +212,8 @@ name="details"
                 </p>
               </div>
             </label>
-
-            <div className="mt-5">
-              <span className="mb-2 block text-sm font-medium">سرعة التنفيذ</span>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {urgencyOptions.map((u) => (
-                  <button
-                    type="button"
-                    key={u.id}
-                    onClick={() => setUrgency(u.id)}
-                    className={`rounded-2xl border p-4 text-right text-sm transition-colors ${
-                      urgency === u.id
-                        ? "border-accent bg-secondary"
-                        : "border-border hover:border-accent/40"
-                    }`}
-                  >
-                    <span className="block font-semibold">{u.label}</span>
-                    <span className="mt-1 block text-xs text-muted-foreground">
-                      {u.extra ? `+ ${u.extra} AED` : "ضمن السعر الأساسي"}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
           </section>
+
         </div>
 
         <aside className="lg:sticky lg:top-24">
