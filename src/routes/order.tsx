@@ -32,7 +32,7 @@ function OrderPage() {
     getService(initial)?.id ?? services[0]!.id,
   );
   const [fileName, setFileName] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   // keep the selected service in sync when arriving from another service card
   useEffect(() => {
@@ -45,34 +45,22 @@ function OrderPage() {
   const total = service.price;
   const paymentLink = getPaymentLink(service);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    setSending(true);
+    try {
+      await fetch("https://formsubmit.co/ss.mm.97@hotmail.com", {
+        method: "POST",
+        body: new FormData(form),
+        mode: "no-cors",
+      });
+    } catch {
+      // even if the email delivery request fails we still send the customer to pay
+    }
+    if (paymentLink) window.location.href = paymentLink;
+  };
 
-  if (submitted) {
-    return (
-      <div className="mx-auto max-w-xl px-4 py-24 text-center">
-        <span className="grid mx-auto h-16 w-16 place-items-center rounded-2xl bg-ai-gradient text-3xl text-primary-foreground">
-          ✓
-        </span>
-        <h1 className="mt-6 text-2xl font-bold">تم استلام طلبك</h1>
-        <p className="mt-3 leading-8 text-muted-foreground">
-          شكراً لك! سنراجع تفاصيل طلبك ونتواصل معك عبر الواتساب أو البريد الإلكتروني
-          لتأكيد السعر النهائي ({total} AED) واستكمال خطوة الدفع.
-        </p>
-
-<a
-  href={paymentLink}
-  target="_blank"
->
-  Ziina ادفع الآن عبر
-</a>
-        <button
-          onClick={() => setSubmitted(false)}
-          className="mt-8 rounded-2xl border border-border px-6 py-3 text-sm font-semibold"
-        >
-          إرسال طلب آخر
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
@@ -86,13 +74,18 @@ function OrderPage() {
       </div>
 
       <form
-  action="https://formsubmit.co/ss.mm.97@hotmail.com"
-  method="POST"
-  encType="multipart/form-data"
-        
-
+        action="https://formsubmit.co/ss.mm.97@hotmail.com"
+        method="POST"
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
       >
+
         <input type="hidden" name="_next" value={paymentLink} />
+        <input type="hidden" name="_captcha" value="false" />
+
+        <input type="hidden" name="_service" value={service.title} />
+        <input type="hidden" name="_price" value={`${total} AED`} />
+
         <div className="space-y-5">
        
           <section className="surface-card rounded-3xl p-5 sm:p-6">
@@ -245,10 +238,12 @@ name="details"
 
             <button
               type="submit"
-              className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow"
+              disabled={sending}
+              className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow disabled:opacity-70"
             >
-              الانتقال للدفع
+              {sending ? "جاري التحويل للدفع..." : "الانتقال للدفع"}
             </button>
+
 
             <p className="mt-3 text-center text-xs text-navy-foreground/60">
               سيتم تحويلك إلى بوابة الدفع الآمنة (Ziina) لإتمام عملية الدفع.
