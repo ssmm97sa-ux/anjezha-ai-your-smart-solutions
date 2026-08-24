@@ -26,17 +26,11 @@ export const Route = createFileRoute("/order")({
   component: OrderPage,
 });
 
-const urgencyOptions = [
-  { id: "normal", label: "عادي", extra: 0 },
-  { id: "fast", label: "مستعجل", extra: 20 },
-];
-
 function OrderPage() {
   const { service: initial } = Route.useSearch();
   const [serviceId, setServiceId] = useState(
     getService(initial)?.id ?? services[0]!.id,
   );
-  const [urgency, setUrgency] = useState("normal");
   const [fileName, setFileName] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
@@ -48,9 +42,9 @@ function OrderPage() {
   }, [initial]);
 
   const service = getService(serviceId) ?? services[0]!;
-  const extra = urgencyOptions.find((u) => u.id === urgency)?.extra ?? 0;
-  const total = service.price + extra;
+  const total = service.price;
   const paymentLink = getPaymentLink(service);
+
 
   if (submitted) {
     return (
