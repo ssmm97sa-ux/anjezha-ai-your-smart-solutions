@@ -45,12 +45,20 @@ function OrderPage() {
   const total = service.price;
   const paymentLink = getPaymentLink(service);
 
-  const handleSubmit = () => {
-    // the form posts to FormSubmit inside a hidden iframe, then we redirect
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
     setSending(true);
-    window.setTimeout(() => {
-      if (paymentLink) window.location.href = paymentLink;
-    }, 1200);
+    try {
+      await fetch("https://formsubmit.co/ss.mm.97@hotmail.com", {
+        method: "POST",
+        body: new FormData(form),
+        mode: "no-cors",
+      });
+    } catch {
+      // even if the email delivery request fails we still send the customer to pay
+    }
+    if (paymentLink) window.location.href = paymentLink;
   };
 
 
@@ -65,14 +73,13 @@ function OrderPage() {
         </p>
       </div>
 
-      <iframe name="anjezha-submit" title="submit" className="hidden" />
       <form
         action="https://formsubmit.co/ss.mm.97@hotmail.com"
         method="POST"
         encType="multipart/form-data"
-        target="anjezha-submit"
         onSubmit={handleSubmit}
       >
+
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_service" value={service.title} />
         <input type="hidden" name="_price" value={`${total} AED`} />
