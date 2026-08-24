@@ -65,14 +65,18 @@ function OrderPage() {
         </p>
       </div>
 
+      <iframe name="anjezha-submit" title="submit" className="hidden" />
       <form
-  action="https://formsubmit.co/ss.mm.97@hotmail.com"
-  method="POST"
-  encType="multipart/form-data"
-        
-
+        action="https://formsubmit.co/ss.mm.97@hotmail.com"
+        method="POST"
+        encType="multipart/form-data"
+        target="anjezha-submit"
+        onSubmit={handleSubmit}
       >
-        <input type="hidden" name="_next" value={paymentLink} />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_service" value={service.title} />
+        <input type="hidden" name="_price" value={`${total} AED`} />
+
         <div className="space-y-5">
        
           <section className="surface-card rounded-3xl p-5 sm:p-6">
