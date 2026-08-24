@@ -32,7 +32,7 @@ function OrderPage() {
     getService(initial)?.id ?? services[0]!.id,
   );
   const [fileName, setFileName] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   // keep the selected service in sync when arriving from another service card
   useEffect(() => {
@@ -45,34 +45,14 @@ function OrderPage() {
   const total = service.price;
   const paymentLink = getPaymentLink(service);
 
+  const handleSubmit = () => {
+    // the form posts to FormSubmit inside a hidden iframe, then we redirect
+    setSending(true);
+    window.setTimeout(() => {
+      if (paymentLink) window.location.href = paymentLink;
+    }, 1200);
+  };
 
-  if (submitted) {
-    return (
-      <div className="mx-auto max-w-xl px-4 py-24 text-center">
-        <span className="grid mx-auto h-16 w-16 place-items-center rounded-2xl bg-ai-gradient text-3xl text-primary-foreground">
-          ✓
-        </span>
-        <h1 className="mt-6 text-2xl font-bold">تم استلام طلبك</h1>
-        <p className="mt-3 leading-8 text-muted-foreground">
-          شكراً لك! سنراجع تفاصيل طلبك ونتواصل معك عبر الواتساب أو البريد الإلكتروني
-          لتأكيد السعر النهائي ({total} AED) واستكمال خطوة الدفع.
-        </p>
-
-<a
-  href={paymentLink}
-  target="_blank"
->
-  Ziina ادفع الآن عبر
-</a>
-        <button
-          onClick={() => setSubmitted(false)}
-          className="mt-8 rounded-2xl border border-border px-6 py-3 text-sm font-semibold"
-        >
-          إرسال طلب آخر
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
