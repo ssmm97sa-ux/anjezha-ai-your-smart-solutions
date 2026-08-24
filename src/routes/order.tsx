@@ -26,17 +26,11 @@ export const Route = createFileRoute("/order")({
   component: OrderPage,
 });
 
-const urgencyOptions = [
-  { id: "normal", label: "عادي", extra: 0 },
-  { id: "fast", label: "مستعجل", extra: 20 },
-];
-
 function OrderPage() {
   const { service: initial } = Route.useSearch();
   const [serviceId, setServiceId] = useState(
     getService(initial)?.id ?? services[0]!.id,
   );
-  const [urgency, setUrgency] = useState("normal");
   const [fileName, setFileName] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
@@ -48,9 +42,9 @@ function OrderPage() {
   }, [initial]);
 
   const service = getService(serviceId) ?? services[0]!;
-  const extra = urgencyOptions.find((u) => u.id === urgency)?.extra ?? 0;
-  const total = service.price + extra;
+  const total = service.price;
   const paymentLink = getPaymentLink(service);
+
 
   if (submitted) {
     return (
@@ -218,30 +212,8 @@ name="details"
                 </p>
               </div>
             </label>
-
-            <div className="mt-5">
-              <span className="mb-2 block text-sm font-medium">سرعة التنفيذ</span>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {urgencyOptions.map((u) => (
-                  <button
-                    type="button"
-                    key={u.id}
-                    onClick={() => setUrgency(u.id)}
-                    className={`rounded-2xl border p-4 text-right text-sm transition-colors ${
-                      urgency === u.id
-                        ? "border-accent bg-secondary"
-                        : "border-border hover:border-accent/40"
-                    }`}
-                  >
-                    <span className="block font-semibold">{u.label}</span>
-                    <span className="mt-1 block text-xs text-muted-foreground">
-                      {u.extra ? `+ ${u.extra} AED` : "ضمن السعر الأساسي"}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
           </section>
+
         </div>
 
         <aside className="lg:sticky lg:top-24">
@@ -258,14 +230,11 @@ name="details"
                 <span>{service.price} AED</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-navy-foreground/70">رسوم الاستعجال</span>
-                <span>{extra} AED</span>
-              </div>
-              <div className="flex justify-between gap-4">
                 <span className="text-navy-foreground/70">مدة التسليم</span>
-                <span>{urgency === "fast" ? "خلال ٦ ساعات" : service.delivery}</span>
+                <span>{service.delivery}</span>
               </div>
             </div>
+
 
             <div className="mt-5 flex items-end justify-between border-t border-navy-foreground/15 pt-5">
               <span className="text-sm text-navy-foreground/70">الإجمالي</span>
