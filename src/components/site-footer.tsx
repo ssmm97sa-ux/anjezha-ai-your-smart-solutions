@@ -50,6 +50,9 @@ export function SiteFooter() {
             <li>
               <Link to="/order">اطلب الآن</Link>
             </li>
+            <li>
+              <Link to="/suggestions">ساعدنا نطوّر أنجزها</Link>
+            </li>
           </ul>
         </div>
 
