@@ -6,6 +6,7 @@ const nav = [
   { to: "/services", label: "الخدمات" },
   { to: "/about", label: "من نحن" },
   { to: "/faq", label: "الأسئلة الشائعة" },
+  { to: "/suggestions", label: "اقتراحاتك" },
   { to: "/contact", label: "تواصل معنا" },
 ] as const;
 
