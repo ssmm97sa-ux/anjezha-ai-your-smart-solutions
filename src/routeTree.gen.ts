@@ -16,6 +16,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SuggestionsRouteImport } from './routes/suggestions'
 import { Route as TermsRouteImport } from './routes/terms'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SuggestionsRoute = SuggestionsRouteImport.update({
+  id: '/suggestions',
+  path: '/suggestions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/order': typeof OrderRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/suggestions': typeof SuggestionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/order': typeof OrderRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/suggestions': typeof SuggestionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/order': typeof OrderRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/suggestions': typeof SuggestionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/privacy'
     | '/services'
+    | '/suggestions'
     | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/privacy'
     | '/services'
+    | '/suggestions'
     | '/terms'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/privacy'
     | '/services'
+    | '/suggestions'
     | '/terms'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   OrderRoute: typeof OrderRoute
   PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
+  SuggestionsRoute: typeof SuggestionsRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/suggestions': {
+      id: '/suggestions'
+      path: '/suggestions'
+      fullPath: '/suggestions'
+      preLoaderRoute: typeof SuggestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -203,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrderRoute: OrderRoute,
   PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
+  SuggestionsRoute: SuggestionsRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
