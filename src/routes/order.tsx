@@ -244,13 +244,63 @@ name="details"
             >
               {sending ? "جاري التحويل للدفع..." : "الانتقال للدفع"}
             </button>
-
-
             <p className="mt-3 text-center text-xs text-navy-foreground/60">
               سيتم تحويلك إلى بوابة الدفع الآمنة (Ziina) لإتمام عملية الدفع.
-          
             </p>
           </div>
+
+          <div className="mt-4 rounded-3xl border border-border bg-card p-5">
+            <h3 className="text-sm font-bold">طرق الدفع</h3>
+            <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl border border-accent/40 bg-secondary/60 p-4">
+              <span className="flex items-center gap-3">
+                <span aria-hidden className="grid h-9 w-9 place-items-center rounded-xl bg-ai-gradient text-sm font-bold text-primary-foreground">
+                  Z
+                </span>
+                <span>
+                  <span className="block text-sm font-semibold">Ziina</span>
+                  <span className="block text-xs text-muted-foreground">
+                    الدفع الآمن بالدرهم الإماراتي
+                  </span>
+                </span>
+              </span>
+              <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                مفعّل
+              </span>
+            </div>
+
+            <ul className="mt-3 grid grid-cols-2 gap-2">
+              {["PayPal", "Visa / Mastercard", "Apple Pay", "Google Pay"].map((m) => (
+                <li key={m}>
+                  <button
+                    type="button"
+                    disabled
+                    aria-disabled="true"
+                    title="غير مفعّل حالياً"
+                    className="w-full cursor-not-allowed rounded-xl border border-dashed border-border bg-secondary/40 p-3 text-right opacity-70"
+                  >
+                    <span className="block text-xs font-semibold">{m}</span>
+                    <span className="mt-1 block text-[11px] text-muted-foreground">قريباً</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs leading-6 text-muted-foreground">
+              حالياً الدفع يتم عبر Ziina فقط. باقي الطرق قيد التفعيل وسنعلن عنها فور
+              اكتمال التفعيل.
+            </p>
+          </div>
+
+          <div className="mt-4 rounded-3xl border border-border bg-secondary/50 p-5">
+            <div className="flex items-center gap-2">
+              <span aria-hidden className="text-lg">🎁</span>
+              <h3 className="text-sm font-bold">برنامج النقاط والاسترداد — قريباً</h3>
+            </div>
+            <p className="mt-2 text-xs leading-6 text-muted-foreground">
+              نعمل على برنامج يمنحك رصيداً من قيمة طلبك تستخدمه في طلبك القادم. لم يبدأ
+              احتساب أي رصيد بعد، ولن يؤثر على سعر طلبك الحالي.
+            </p>
+          </div>
+
 
           <div className="mt-4 rounded-2xl border border-border bg-card p-5 text-xs leading-6 text-muted-foreground">
             بإرسال الطلب فإنك توافق على{" "}
