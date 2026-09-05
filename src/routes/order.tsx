@@ -78,6 +78,7 @@ function OrderPage() {
         method="POST"
         encType="multipart/form-data"
         onSubmit={handleSubmit}
+        className="grid gap-6 lg:grid-cols-[1.35fr_1fr] lg:items-start"
       >
 
         <input type="hidden" name="_next" value={paymentLink} />
