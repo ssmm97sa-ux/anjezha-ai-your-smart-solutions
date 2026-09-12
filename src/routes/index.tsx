@@ -159,7 +159,10 @@ function Home() {
 
       <TrustBar />
 
+      <CvPromo />
+
       <section id="services" className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+
         <div className="max-w-2xl">
           <span className="text-sm font-semibold text-accent">خدماتنا</span>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
