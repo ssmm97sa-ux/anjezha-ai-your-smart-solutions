@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { services } from "@/lib/services";
 import { ServiceCard } from "@/components/service-card";
 import { TrustBar } from "@/components/trust-bar";
+import { CvPromo } from "@/components/cv-promo";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
