@@ -3,6 +3,8 @@ export type Service = {
   title: string;
   desc: string;
   price: number;
+  previousPrice?: number;
+  offerLabel?: string;
   delivery: string;
   icon: string;
   points: string[];
@@ -12,11 +14,18 @@ export const services: Service[] = [
   {
     id: "cv",
     title: "كتابة سيرة ذاتية احترافية",
-    desc: "سيرة ذاتية مصممة لسوق العمل الإماراتي والخليجي، جاهزة للتقديم على الوظائف وأنظمة التوظيف الإلكترونية.",
-    price: 49,
+    desc: "سيرة ذاتية محسّنة المحتوى والصياغة، بتنسيق احترافي وملف PDF جاهز للتقديم.",
+    price: 19,
+    previousPrice: 49,
+    offerLabel: "عرض أول 20 عميل",
     delivery: "خلال 24 ساعة",
     icon: "📄",
-    points: ["تنسيق متوافق مع أنظمة ATS", "نسخة عربية أو إنجليزية", "تعديل مجاني واحد"],
+    points: [
+      "تحسين المحتوى والصياغة",
+      "تنسيق احترافي",
+      "PDF جاهز للتقديم",
+      "تعديل مجاني بعد الاستلام",
+    ],
   },
   {
     id: "email",
@@ -69,7 +78,7 @@ export const getService = (id: string | undefined) =>
   services.find((s) => s.id === id);
 
 export const ziinaLinksByService: Record<string, string> = {
-  cv: "https://pay.ziina.com/anjezha.ai/PuKbnsmDc?source=app",
+  cv: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
   email: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
   summary: "https://pay.ziina.com/anjezha.ai/9urLJeWDX?source=app",
   rewrite: "https://pay.ziina.com/anjezha.ai/s9POcL8XS?source=app",

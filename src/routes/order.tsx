@@ -103,6 +103,16 @@ function OrderPage() {
                     <span className="font-semibold text-accent">
                       {service.price} AED
                     </span>
+                    {service.previousPrice ? (
+                      <del className="text-muted-foreground">
+                        {service.previousPrice} AED
+                      </del>
+                    ) : null}
+                    {service.offerLabel ? (
+                      <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-accent">
+                        {service.offerLabel}
+                      </span>
+                    ) : null}
                     <span className="text-muted-foreground">{service.delivery}</span>
                   </div>
                 </div>
@@ -128,7 +138,7 @@ function OrderPage() {
                       <span className="block text-lg leading-none">{s.icon}</span>
                       <span className="mt-1 block text-xs">{s.title}</span>
                       <span className="mt-1 block text-xs text-muted-foreground">
-                        {s.price} AED
+                        {s.price} AED{s.previousPrice ? ` — بدلاً من ${s.previousPrice} AED` : ""}
                       </span>
                     </button>
                   );
@@ -221,7 +231,14 @@ name="details"
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-navy-foreground/70">السعر الأساسي</span>
-                <span>{service.price} AED</span>
+                <span className="flex items-baseline gap-2">
+                  <span>{service.price} AED</span>
+                  {service.previousPrice ? (
+                    <del className="text-xs text-navy-foreground/55">
+                      {service.previousPrice} AED
+                    </del>
+                  ) : null}
+                </span>
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-navy-foreground/70">مدة التسليم</span>
@@ -242,7 +259,11 @@ name="details"
               disabled={sending}
               className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow disabled:opacity-70"
             >
-              {sending ? "جاري التحويل للدفع..." : "الانتقال للدفع"}
+              {sending
+                ? "جاري التحويل للدفع..."
+                : service.id === "cv"
+                  ? "اطلب سيرتك الآن – 19 AED"
+                  : "الانتقال للدفع"}
             </button>
             <p className="mt-3 text-center text-xs text-navy-foreground/60">
               سيتم تحويلك إلى بوابة الدفع الآمنة (Ziina) لإتمام عملية الدفع.
