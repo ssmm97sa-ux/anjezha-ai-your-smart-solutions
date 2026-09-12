@@ -60,10 +60,12 @@ export function CvPromo() {
             <Link
               to="/order"
               search={{ service: cv.id }}
+              data-testid="cv-promo-cta"
               className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-ai-gradient px-6 py-4 text-base font-bold text-primary-foreground ai-glow transition-transform hover:-translate-y-0.5"
             >
               اطلب سيرتك الآن – 19 AED
             </Link>
+
 
             <p className="mt-3 text-xs text-muted-foreground">
               الدفع الآمن عبر Ziina — بدون رسوم مخفية
