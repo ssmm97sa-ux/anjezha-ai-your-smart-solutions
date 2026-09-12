@@ -136,7 +136,14 @@ function Home() {
                       <span aria-hidden className="text-lg">{s.icon}</span>
                       <span className="font-semibold">{s.title}</span>
                     </span>
-                    <span className="shrink-0 font-bold text-ai-gradient">{s.price} AED</span>
+                    <span className="flex shrink-0 items-baseline gap-2">
+                      <span className="font-bold text-ai-gradient">{s.price} AED</span>
+                      {s.previousPrice ? (
+                        <del className="text-xs text-navy-foreground/55">
+                          {s.previousPrice} AED
+                        </del>
+                      ) : null}
+                    </span>
                   </Link>
                 </li>
               ))}

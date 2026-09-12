@@ -9,7 +9,7 @@ export function ServiceCard({ service }: { service: Service }) {
           {service.icon}
         </span>
         <span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground">
-          {service.delivery}
+          {service.offerLabel ?? service.delivery}
         </span>
       </div>
 
@@ -28,8 +28,15 @@ export function ServiceCard({ service }: { service: Service }) {
       <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-5">
         <div>
           <span className="block text-xs text-muted-foreground">تبدأ من</span>
-          <span className="text-xl font-bold">
-            {service.price} <span className="text-sm text-muted-foreground">AED</span>
+          <span className="flex flex-wrap items-baseline gap-2">
+            <span className="text-xl font-bold">
+              {service.price} <span className="text-sm text-muted-foreground">AED</span>
+            </span>
+            {service.previousPrice ? (
+              <del className="text-sm text-muted-foreground">
+                {service.previousPrice} AED
+              </del>
+            ) : null}
           </span>
         </div>
         <Link
@@ -37,7 +44,7 @@ export function ServiceCard({ service }: { service: Service }) {
           search={{ service: service.id }}
           className="rounded-xl bg-navy-gradient px-4 py-2.5 text-sm font-semibold text-navy-foreground transition-transform hover:-translate-y-0.5"
         >
-          اطلب الخدمة
+          {service.id === "cv" ? "اطلب سيرتك الآن – 19 AED" : "اطلب الخدمة"}
         </Link>
       </div>
     </article>
