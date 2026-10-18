@@ -1,8 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
+  { to: "/creators", label: "للمبدعين" },
   { to: "/services", label: "الخدمات" },
   { to: "/about", label: "من نحن" },
   { to: "/faq", label: "الأسئلة الشائعة" },
@@ -20,12 +23,12 @@ export function SiteHeader() {
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-ai-gradient text-lg font-bold text-primary-foreground">
             أ
           </span>
-          <span className="text-lg font-bold tracking-tight">
+          <span className="text-lg font-bold">
             أنجزها <span className="text-ai-gradient">AI</span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav aria-label="التنقل الرئيسي" className="hidden items-center gap-4 lg:flex">
           {nav.map((n) => (
             <Link
               key={n.to}
@@ -46,19 +49,22 @@ export function SiteHeader() {
           >
             اطلب الخدمة
           </Link>
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="icon"
             aria-label="القائمة"
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-border md:hidden"
+            className="h-10 w-10 lg:hidden"
           >
-            <span className="text-base">{open ? "✕" : "☰"}</span>
-          </button>
+            {open ? <X /> : <Menu />}
+          </Button>
         </div>
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-border bg-background lg:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col px-4 py-2">
             {nav.map((n) => (
               <Link

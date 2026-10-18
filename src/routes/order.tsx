@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { services, getService, getPaymentLink } from "@/lib/services";
+import { allServices, getService, getPaymentLink } from "@/lib/services";
+import { Button } from "@/components/ui/button";
 
 type OrderSearch = { service?: string | undefined };
 
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/order")({
 function OrderPage() {
   const { service: initial } = Route.useSearch();
   const [serviceId, setServiceId] = useState(
-    getService(initial)?.id ?? services[0]!.id,
+    getService(initial)?.id ?? "cv",
   );
   const [fileName, setFileName] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -41,7 +42,8 @@ function OrderPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial]);
 
-  const service = getService(serviceId) ?? services[0]!;
+  const service = getService(serviceId) ?? getService("cv");
+  if (!service) return null;
   const total = service.price;
   const paymentLink = getPaymentLink(service);
 
@@ -49,6 +51,11 @@ function OrderPage() {
     e.preventDefault();
     const form = e.currentTarget;
     setSending(true);
+    if (!paymentLink) {
+      // Unconfigured tiers send an inquiry via the existing endpoint, never an incorrect checkout.
+      form.submit();
+      return;
+    }
     try {
       await fetch("https://formsubmit.co/ss.mm.97@hotmail.com", {
         method: "POST",
@@ -68,8 +75,7 @@ function OrderPage() {
         <span className="text-sm font-semibold text-accent">نموذج الطلب</span>
         <h1 className="mt-2 text-3xl font-bold sm:text-4xl">اطلب خدمتك الآن</h1>
         <p className="mt-3 max-w-2xl leading-8 text-muted-foreground">
-          عبّئ التفاصيل التالية وسنبدأ العمل فور تأكيد الطلب. السعر يظهر مباشرة قبل
-          الانتقال للدفع.
+          عبّئ التفاصيل وشاهد السعر بوضوح. نؤكد تفاصيل التنفيذ وموعد التسليم بعد مراجعة طلبك.
         </p>
       </div>
 
@@ -81,10 +87,11 @@ function OrderPage() {
         className="grid gap-6 lg:grid-cols-[1.35fr_1fr] lg:items-start"
       >
 
-        <input type="hidden" name="_next" value={paymentLink} />
+        {paymentLink ? <input type="hidden" name="_next" value={paymentLink} /> : null}
         <input type="hidden" name="_captcha" value="false" />
 
         <input type="hidden" name="_service" value={service.title} />
+        <input type="hidden" name="_service_id" value={service.id} />
         <input type="hidden" name="_price" value={`${total} AED`} />
 
         <div className="space-y-5">
@@ -122,14 +129,16 @@ function OrderPage() {
             <div className="mt-5">
               <span className="mb-3 block text-sm font-medium">اختيار خدمة أخرى</span>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {services.map((s) => {
+                {allServices.map((s) => {
                   const active = s.id === serviceId;
                   return (
-                    <button
+                    <Button
                       type="button"
+                      variant="outline"
+                      aria-pressed={active}
                       key={s.id}
                       onClick={() => setServiceId(s.id)}
-                      className={`rounded-xl border p-3 text-right text-sm transition-colors ${
+                      className={`block h-auto whitespace-normal rounded-xl border p-3 text-right text-sm transition-colors ${
                         active
                           ? "border-accent bg-secondary font-semibold"
                           : "border-border hover:border-accent/40"
@@ -140,7 +149,7 @@ function OrderPage() {
                       <span className="mt-1 block text-xs text-muted-foreground">
                         {s.price} AED{s.previousPrice ? ` — بدلاً من ${s.previousPrice} AED` : ""}
                       </span>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -163,7 +172,7 @@ function OrderPage() {
                 <span className="mb-2 block text-sm font-medium">البريد الإلكتروني</span>
                 <input
                   required name="email"
-                type="text"
+type="email"
                   dir="ltr"
                   className="field-input"
                   placeholder="name@email.com"
@@ -188,6 +197,7 @@ function OrderPage() {
 
           <section className="surface-card rounded-3xl p-5 sm:p-6">
             <h2 className="text-lg font-bold">تفاصيل الطلب</h2>
+            {service.category === "creators" && <div className="mt-4 rounded-lg bg-secondary p-4 text-sm leading-7"><p className="font-bold">مخرجات كتابية فقط — لا يشمل مونتاج أو تصدير فيديو</p><p className="mt-2 text-muted-foreground">{service.inputHint}</p></div>}
             <label className="mt-4 block">
               <span className="mb-2 block text-sm font-medium">
                 اشرح لنا ما تحتاجه بالتفصيل
@@ -197,7 +207,7 @@ function OrderPage() {
 name="details"
                 rows={6}
                 className="field-input"
-                placeholder="مثال: أحتاج سيرة ذاتية باللغة الإنجليزية لوظيفة محاسب في دبي، خبرتي ٥ سنوات..."
+                placeholder={service.inputHint ?? "اكتب اللغة المطلوبة، هدف الطلب والتفاصيل التي تريد تضمينها..."}
               />
             </label>
 
@@ -254,19 +264,20 @@ name="details"
               </span>
             </div>
 
-            <button
+            {!paymentLink && <p className="mt-5 rounded-lg border border-navy-foreground/20 p-4 text-sm leading-7">رابط دفع {total} AED غير مفعّل لهذه الباقة بعد. يمكنك إرسال طلب اهتمام بالبريد فقط؛ لن يتم تحصيل مبلغ أو تحويلك إلى سعر آخر.</p>}
+            <Button
               type="submit"
               disabled={sending}
-              className="mt-6 w-full rounded-2xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow disabled:opacity-70"
+              className="mt-6 h-auto w-full whitespace-normal rounded-xl bg-ai-gradient px-6 py-4 font-bold text-primary-foreground ai-glow disabled:opacity-70"
             >
               {sending
-                ? "جاري التحويل للدفع..."
-                : service.id === "cv"
+                ? paymentLink ? "جاري التحويل للدفع..." : "جاري إرسال طلب الاهتمام..."
+                : !paymentLink ? "إرسال طلب اهتمام — بدون دفع" : service.id === "cv"
                   ? "اطلب سيرتك الآن – 19 AED"
                   : "الانتقال للدفع"}
-            </button>
+            </Button>
             <p className="mt-3 text-center text-xs text-navy-foreground/60">
-              سيتم تحويلك إلى بوابة الدفع الآمنة (Ziina) لإتمام عملية الدفع.
+              {paymentLink ? "سيتم إرسال تفاصيل الطلب ثم تحويلك إلى Ziina لإتمام الدفع." : "إرسال الطلب لا يعني تأكيد التنفيذ أو سداد السعر."}
             </p>
           </div>
 
@@ -285,7 +296,7 @@ name="details"
                 </span>
               </span>
               <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-                مفعّل
+                {paymentLink ? "مفعّل" : "غير متاح لهذه الباقة"}
               </span>
             </div>
 
