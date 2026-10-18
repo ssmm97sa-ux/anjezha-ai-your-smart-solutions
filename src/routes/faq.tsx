@@ -4,6 +4,8 @@ import { creatorFaqs } from "@/components/creator-sections";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "الأسئلة الشائعة | أنجزها AI" },
       {
         name: "description",

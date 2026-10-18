@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import type { Service } from "@/lib/services";
+import { Button } from "@/components/ui/button";
 
 export function ServiceCard({ service }: { service: Service }) {
   return (
-    <article className="surface-card flex h-full flex-col rounded-3xl p-6">
+    <article data-service={service.id} className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
       <div className="flex items-start justify-between gap-3">
         <span className="grid h-12 w-12 place-items-center rounded-2xl bg-secondary text-2xl">
           {service.icon}
@@ -25,7 +26,7 @@ export function ServiceCard({ service }: { service: Service }) {
         ))}
       </ul>
 
-      <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-5">
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
         <div>
           <span className="block text-xs text-muted-foreground">تبدأ من</span>
           <span className="flex flex-wrap items-baseline gap-2">
@@ -39,13 +40,12 @@ export function ServiceCard({ service }: { service: Service }) {
             ) : null}
           </span>
         </div>
-        <Link
+        <Button asChild className="h-auto whitespace-normal px-4 py-3"><Link
           to="/order"
           search={{ service: service.id }}
-          className="rounded-xl bg-navy-gradient px-4 py-2.5 text-sm font-semibold text-navy-foreground transition-transform hover:-translate-y-0.5"
         >
           {service.id === "cv" ? "اطلب سيرتك الآن – 19 AED" : "اطلب الخدمة"}
-        </Link>
+        </Link></Button>
       </div>
     </article>
   );

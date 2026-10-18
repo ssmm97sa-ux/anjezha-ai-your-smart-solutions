@@ -6,6 +6,8 @@ import { CreatorCatalog } from "@/components/creator-sections";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "الخدمات والأسعار | أنجزها AI" },
       {
         name: "description",
