@@ -1,267 +1,48 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft, FileText, Languages, Sparkles, Check } from "lucide-react";
 import { services } from "@/lib/services";
 import { ServiceCard } from "@/components/service-card";
-import { TrustBar } from "@/components/trust-bar";
 import { CvPromo } from "@/components/cv-promo";
-
+import { Button } from "@/components/ui/button";
+import { CreatorHero, CreatorTrust, CreatorCatalog, CreatorExamples, CreatorFaq } from "@/components/creator-sections";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "أنجزها AI | خدمات كتابة وترجمة بالذكاء الاصطناعي في الإمارات" },
-      {
-        name: "description",
-        content:
-          "سيرة ذاتية، إيميلات رسمية، تلخيص مستندات، إعادة صياغة، كتابة محتوى وترجمة — أسعار واضحة تبدأ من 15 درهم وتسليم خلال ٦ إلى ٢٤ ساعة.",
-      },
-      { property: "og:title", content: "أنجزها AI | خدمات ذكاء اصطناعي احترافية" },
-      {
-        property: "og:description",
-        content: "خدمات رقمية سريعة واحترافية تساعدك تنجز شغلك بسهولة. الأسعار بالدرهم الإماراتي.",
-      },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "أنجزها AI | خدمات مكتوبة للمبدعين والكتابة في الإمارات" },
+    { name: "description", content: "أنجزها للمبدعين: عناوين يوتيوب وأفكار ونصوص وخطط محتوى تبدأ من 19 AED، مع خدمات السيرة الذاتية والترجمة والكتابة. عربي أولاً، بدون مونتاج فيديو." },
+    { property: "og:title", content: "أنجزها AI | أنت تصنع المحتوى، ونحن نجهّز الكلمات" },
+    { property: "og:description", content: "خدمات نصوص وخطط للمبدعين والمشاريع الصغيرة، وكتابة وترجمة بأسعار واضحة بالدرهم الإماراتي." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ] }),
   component: Home,
 });
 
 const steps = [
-  { n: "١", t: "اختر الخدمة", d: "حدد الخدمة التي تحتاجها من القائمة وشوف السعر مباشرة." },
-  { n: "٢", t: "أرسل تفاصيلك", d: "اكتب طلبك وارفع أي ملف داعم في أقل من دقيقتين." },
-  { n: "٣", t: "ادفع بأمان", d: "ادفع بالدرهم الإماراتي عبر بوابة Ziina الآمنة." },
-  { n: "٤", t: "استلم العمل", d: "نسلمك العمل جاهزاً على بريدك في الوقت المحدد." },
-];
-
-const why = [
-  {
-    icon: "🎯",
-    t: "مكتوب لسوق الإمارات",
-    d: "صياغة تناسب جهات العمل والجهات الرسمية في الإمارات والخليج، عربي أو إنجليزي.",
-  },
-  {
-    icon: "🧠",
-    t: "ذكاء اصطناعي + مراجعة بشرية",
-    d: "نستخدم أحدث النماذج ثم نراجع النص يدوياً حتى يخرج بلغة سليمة وخالية من الحشو.",
-  },
-  {
-    icon: "📱",
-    t: "طلب من الجوال في دقيقتين",
-    d: "نموذج قصير وواضح، بدون تسجيل حساب وبدون خطوات معقدة.",
-  },
-  {
-    icon: "🔁",
-    t: "تعديل مجاني",
-    d: "جولة تعديل واحدة مجاناً خلال ٤٨ ساعة ضمن نطاق الطلب الأصلي.",
-  },
-];
-
-const faqPreview = [
-  {
-    q: "كم يستغرق تنفيذ الطلب؟",
-    a: "أغلب الطلبات تُسلّم خلال ٦ إلى ٢٤ ساعة حسب نوع الخدمة وحجم العمل.",
-  },
-  {
-    q: "كيف أدفع؟",
-    a: "الدفع بالدرهم الإماراتي عبر بوابة Ziina الآمنة مباشرة بعد إرسال تفاصيل طلبك.",
-  },
-  {
-    q: "هل ملفاتي تبقى سرية؟",
-    a: "نعم. لا نشارك ملفاتك مع أي طرف ثالث، وتُحذف من أنظمتنا خلال ٣٠ يوماً من التسليم.",
-  },
+  { n: "01", t: "اختر ما تحتاجه", d: "خدمة واضحة بسعر معلن بالدرهم الإماراتي." },
+  { n: "02", t: "شاركنا تفاصيلك", d: "موضوعك وجمهورك ونصوصك، من نموذج الطلب الحالي." },
+  { n: "03", t: "أكمل طلبك", d: "ادفع عبر Ziina للخدمات المفعّلة؛ الباقات الأخرى طلب اهتمام فقط." },
+  { n: "04", t: "استلم مخرجاتك", d: "نؤكد موعد التنفيذ ثم نرسل المواد المكتوبة إلى بريدك." },
 ];
 
 function Home() {
-  return (
-    <>
-      <section className="relative overflow-hidden bg-navy-gradient text-navy-foreground">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-32 left-[-10%] h-80 w-80 rounded-full bg-ai-gradient opacity-30 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -bottom-40 right-[-10%] h-96 w-96 rounded-full bg-ai-gradient opacity-20 blur-3xl"
-        />
-        <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-navy-foreground/15 bg-navy-foreground/5 px-4 py-1.5 text-xs">
-              <span aria-hidden className="h-2 w-2 rounded-full bg-glow" />
-              من دبي — نخدم الإمارات وكل العالم العربي
-            </span>
-
-            <h1 className="mt-6 text-4xl font-bold leading-[1.25] sm:text-6xl">
-              أنجزها <span className="text-ai-gradient">بالذكاء الاصطناعي</span>
-            </h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-navy-foreground/75 sm:text-lg">
-              خدمات رقمية سريعة واحترافية تساعدك تنجز شغلك بسهولة — سيرة ذاتية، خطابات
-              رسمية، تلخيص، إعادة صياغة، محتوى وترجمة.
-            </p>
-
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                to="/order"
-                className="rounded-2xl bg-ai-gradient px-8 py-4 text-base font-bold text-primary-foreground ai-glow transition-transform hover:-translate-y-0.5"
-              >
-                ابدأ الآن
-              </Link>
-              <Link
-                to="/services"
-                className="rounded-2xl border border-navy-foreground/20 px-8 py-4 text-base font-semibold transition-colors hover:bg-navy-foreground/10"
-              >
-                تصفح الخدمات والأسعار
-              </Link>
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              {["خدمات سريعة وسهلة", "أسعار واضحة", "دعم باللغة العربية"].map((text) => (
-                <div
-                  key={text}
-                  className="flex items-center gap-3 rounded-2xl border border-navy-foreground/10 bg-navy-foreground/5 px-5 py-3"
-                >
-                  <span aria-hidden className="h-2 w-2 rounded-full bg-glow" />
-                  <span className="text-sm font-semibold">{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-navy-foreground/10 bg-navy-foreground/5 p-6 backdrop-blur-sm sm:p-8">
-            <p className="text-sm text-navy-foreground/70">أسعار البداية بالدرهم الإماراتي</p>
-            <ul className="mt-5 space-y-3">
-              {services.map((s) => (
-                <li key={s.id}>
-                  <Link
-                    to="/order"
-                    search={{ service: s.id }}
-                    className="flex items-center justify-between gap-3 rounded-2xl border border-navy-foreground/10 px-4 py-3 text-sm transition-colors hover:bg-navy-foreground/10"
-                  >
-                    <span className="flex items-center gap-3">
-                      <span aria-hidden className="text-lg">{s.icon}</span>
-                      <span className="font-semibold">{s.title}</span>
-                    </span>
-                    <span className="flex shrink-0 items-baseline gap-2">
-                      <span className="font-bold text-ai-gradient">{s.price} AED</span>
-                      {s.previousPrice ? (
-                        <del className="text-xs text-navy-foreground/55">
-                          {s.previousPrice} AED
-                        </del>
-                      ) : null}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 text-center text-xs text-navy-foreground/60">
-              الدفع الآمن عبر Ziina — بدون رسوم مخفية
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <TrustBar />
-
-      <CvPromo />
-
-      <section id="services" className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-
-        <div className="max-w-2xl">
-          <span className="text-sm font-semibold text-accent">خدماتنا</span>
-          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-            كل ما تحتاجه للكتابة والمستندات في مكان واحد
-          </h2>
-          <p className="mt-4 leading-8 text-muted-foreground">
-            اختر الخدمة، أرسل تفاصيلك، وادفع بالدرهم الإماراتي. السعر يظهر لك بوضوح قبل
-            أي خطوة دفع.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <ServiceCard key={s.id} service={s} />
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-secondary/60 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <span className="text-sm font-semibold text-accent">لماذا أنجزها</span>
-          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">لماذا يختارنا العملاء؟</h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {why.map((w) => (
-              <div key={w.t} className="surface-card flex gap-4 rounded-3xl p-6">
-                <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-secondary text-xl">
-                  {w.icon}
-                </span>
-                <div>
-                  <h3 className="text-lg font-bold">{w.t}</h3>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">{w.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-        <span className="text-sm font-semibold text-accent">خطوات بسيطة</span>
-        <h2 className="mt-3 text-3xl font-bold sm:text-4xl">كيف تعمل الخدمة؟</h2>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s) => (
-            <div key={s.n} className="rounded-3xl bg-card p-7 shadow-[var(--shadow-card)]">
-              <span aria-hidden className="grid h-11 w-11 place-items-center rounded-2xl bg-ai-gradient text-lg font-bold text-primary-foreground">
-                {s.n}
-              </span>
-              <h3 className="mt-5 text-lg font-bold">{s.t}</h3>
-              <p className="mt-2 text-sm leading-7 text-muted-foreground">{s.d}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-secondary/60 py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl px-4">
-          <h2 className="text-3xl font-bold sm:text-4xl">أسئلة سريعة قبل الطلب</h2>
-          <div className="mt-8 space-y-4">
-            {faqPreview.map((f) => (
-              <details key={f.q} className="group rounded-2xl border border-border bg-card p-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold">
-                  {f.q}
-                  <span aria-hidden className="text-accent transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <p className="mt-3 text-sm leading-8 text-muted-foreground">{f.a}</p>
-              </details>
-            ))}
-          </div>
-          <Link
-            to="/faq"
-            className="mt-6 inline-flex text-sm font-semibold text-accent underline underline-offset-4"
-          >
-            كل الأسئلة الشائعة
-          </Link>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 py-16 pb-28 sm:py-20 md:pb-20">
-        <div className="rounded-[2rem] bg-navy-gradient px-6 py-14 text-center text-navy-foreground sm:px-14">
-          <h2 className="text-3xl font-bold sm:text-4xl">جاهز تنجز طلبك اليوم؟</h2>
-          <p className="mx-auto mt-4 max-w-lg leading-8 text-navy-foreground/70">
-            أرسل تفاصيل طلبك الآن واستلم عملك في الوقت المحدد — الدفع بالدرهم الإماراتي.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              to="/order"
-              className="inline-flex rounded-2xl bg-ai-gradient px-8 py-4 font-bold text-primary-foreground ai-glow"
-            >
-              ابدأ الآن
-            </Link>
-            <Link
-              to="/suggestions"
-              className="inline-flex rounded-2xl border border-navy-foreground/20 px-8 py-4 font-semibold transition-colors hover:bg-navy-foreground/10"
-            >
-              ساعدنا نطوّر أنجزها
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <>
+    <CreatorHero />
+    <CreatorTrust />
+    <CreatorCatalog />
+    <CreatorExamples />
+    <section className="mx-auto max-w-6xl px-5 py-14 sm:py-20">
+      <span className="text-sm font-bold text-accent">لماذا أنجزها؟</span>
+      <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">محتواك بصوتك. وخطوتك التالية أوضح.</h2>
+      <div className="mt-9 grid gap-8 md:grid-cols-3">{[
+        { icon: FileText, title: "تعرف ما ستستلم", text: "عدد الأفكار والنصوص ونطاق كل خدمة أمامك قبل الطلب، بدون وعود بمشاهدات أو نتائج." },
+        { icon: Languages, title: "لغة تناسب جمهورك", text: "شاركنا نبرتك ومجالك، وحدد العربية أو الإنجليزية لتبقى الكلمات قريبة من علامتك." },
+        { icon: Sparkles, title: "أنت تقود الفكرة", text: "نرتّب المادة التي ترسلها ونجهّز نصوصها. التصوير والمونتاج والنشر تبقى خارج نطاق الخدمة." },
+      ].map(({ icon: Icon, title, text }) => <div key={title}><Icon className="h-7 w-7 text-accent" /><h3 className="mt-4 text-xl font-bold">{title}</h3><p className="mt-3 text-sm leading-8 text-muted-foreground">{text}</p></div>)}</div>
+    </section>
+    <section className="border-y border-border bg-secondary/50 py-14 sm:py-20"><div className="mx-auto max-w-6xl px-5"><span className="text-sm font-bold text-accent">من الفكرة إلى الطلب</span><h2 className="mt-3 text-3xl font-extrabold">خطوات قليلة، وتفاصيل واضحة</h2><div className="mt-9 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{steps.map(step => <div key={step.n}><span dir="ltr" className="text-sm font-bold text-accent">{step.n}</span><h3 className="mt-3 text-lg font-bold">{step.t}</h3><p className="mt-2 text-sm leading-7 text-muted-foreground">{step.d}</p></div>)}</div></div></section>
+    <CvPromo />
+    <section className="mx-auto max-w-6xl px-5 py-12 sm:py-16"><span className="text-sm font-bold text-accent">خدماتنا الأساسية مستمرة</span><h2 className="mt-3 text-3xl font-extrabold">لشغلك، لمستقبلك، ولكل كلمة</h2><p className="mt-4 text-muted-foreground">السيرة الذاتية والإيميلات والتلخيص والترجمة، بنفس الخدمات والأسعار الحالية.</p><div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{services.map(service => <ServiceCard key={service.id} service={service} />)}</div></section>
+    <CreatorFaq />
+    <section className="bg-navy-gradient py-14 text-navy-foreground sm:py-20"><div className="mx-auto max-w-6xl px-5"><span className="inline-flex items-center gap-2 text-sm text-navy-foreground/75"><Check className="h-4 w-4" /> نصوص وخطط، جاهزة لخطوتك التالية</span><h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">عندك فيديو؟ جهّز كلماته الآن.</h2><p className="mt-4 max-w-xl leading-8 text-navy-foreground/75">ابدأ بعناوين ووصف وتعليق مثبّت وCTA بسعر 19 AED. أرسل نص الفيديو أو ملخصه من نموذج الطلب.</p><div className="mt-7 flex flex-wrap gap-3"><Button asChild className="h-12 bg-ai-gradient px-6 font-bold text-primary-foreground"><Link to="/order" search={{ service: "youtube-publish" }}>اطلب تجهيز يوتيوب <ArrowLeft /></Link></Button><Button asChild variant="link" className="h-12 text-navy-foreground"><Link to="/suggestions">ساعدنا نطوّر أنجزها</Link></Button></div></div></section>
+  </>;
 }

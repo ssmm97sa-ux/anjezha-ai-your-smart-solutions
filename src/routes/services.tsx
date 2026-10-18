@@ -1,15 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { services } from "@/lib/services";
 import { ServiceCard } from "@/components/service-card";
+import { CreatorCatalog } from "@/components/creator-sections";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "الخدمات والأسعار | أنجزها AI" },
       {
         name: "description",
         content:
-          "أسعار خدمات أنجزها AI بالدرهم الإماراتي: عرض السيرة الذاتية 19، محتوى 29، ترجمة وتلخيص وإيميلات 19، إعادة صياغة 15.",
+          "خدمات المبدعين والكتابة والترجمة بالدرهم الإماراتي: نصوص يوتيوب 19 وخطط محتوى، وسيرة ذاتية 19 وإيميلات وترجمة وتلخيص 19 وإعادة صياغة 15.",
       },
       { property: "og:title", content: "الخدمات والأسعار | أنجزها AI" },
       {
@@ -23,7 +26,7 @@ export const Route = createFileRoute("/services")({
 
 function ServicesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16">
+    <><CreatorCatalog /><div className="mx-auto max-w-6xl px-4 py-10">
       <span className="text-sm font-semibold text-accent">الأسعار بالدرهم الإماراتي</span>
       <h1 className="mt-3 text-3xl font-bold sm:text-4xl">خدماتنا وأسعارها</h1>
       <p className="mt-4 max-w-2xl leading-8 text-muted-foreground">
@@ -36,6 +39,6 @@ function ServicesPage() {
           <ServiceCard key={s.id} service={s} />
         ))}
       </div>
-    </div>
+    </div></>
   );
 }

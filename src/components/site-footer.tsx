@@ -20,6 +20,7 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold">الخدمات</h3>
           <ul className="mt-4 space-y-3 text-sm text-navy-foreground/70">
+            <li><Link to="/creators">أنجزها للمبدعين</Link></li>
             <li>
               <Link to="/services">السيرة الذاتية</Link>
             </li>

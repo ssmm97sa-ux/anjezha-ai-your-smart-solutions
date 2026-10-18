@@ -4,6 +4,8 @@ import { useState } from "react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "تواصل معنا | أنجزها AI" },
       {
         name: "description",

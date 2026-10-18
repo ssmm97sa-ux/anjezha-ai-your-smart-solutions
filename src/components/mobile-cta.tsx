@@ -1,4 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 export function MobileCta() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -6,12 +7,12 @@ export function MobileCta() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur-lg md:hidden">
-      <Link
+      <Button asChild className="h-auto w-full whitespace-normal rounded-lg px-5 py-3 font-bold"><Link
         to="/order"
-        className="flex items-center justify-center gap-2 rounded-2xl bg-ai-gradient px-6 py-3.5 text-sm font-bold text-primary-foreground"
+        search={{ service: "youtube-publish" }}
       >
-        اطلب خدمتك الآن — تبدأ من 15 AED
-      </Link>
+        جهّز فيديوك للنشر — 19 AED
+      </Link></Button>
     </div>
   );
 }

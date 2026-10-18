@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { creatorFaqs } from "@/components/creator-sections";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "الأسئلة الشائعة | أنجزها AI" },
       {
         name: "description",
@@ -20,9 +23,10 @@ export const Route = createFileRoute("/faq")({
 });
 
 const faqs = [
+  ...creatorFaqs,
   {
     q: "كم يستغرق تنفيذ الطلب؟",
-    a: "أغلب الطلبات تُسلم خلال ٦ إلى ٢٤ ساعة حسب نوع الخدمة وحجم العمل. الطلبات المستعجلة يمكن تسليمها في نفس اليوم عند التنسيق معنا.",
+    a: "مدة خدمات الكتابة الحالية موضحة في بطاقة الخدمة. لخدمات المبدعين، نؤكد الموعد بعد مراجعة التفاصيل والنصوص وقبل بدء التنفيذ.",
   },
   {
     q: "كيف يتم الدفع؟",
